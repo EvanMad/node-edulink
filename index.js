@@ -45,12 +45,14 @@ exports.get_homework = function(auth) {
               resolve(homework);
            }};
         
-        var data = '{"jsonrpc":"2.0","method":"EduLink.Homework","params":{"format":2},"uuid":"' + uuidv4() + '","id":"1"}';
+        //var data = '{"jsonrpc":"2.0","method":"EduLink.Homework","params":{"format":2},"uuid":"' + uuidv4() + '","id":"1"}';
+        var data = `{"jsonrpc":"2.0","method":"EduLink.Homework","params":{"format":2},"uuid":"${uuidv4()}", "id":"1"`;
         
         xhr.send(data);    
     })
 }
 
+// UUID generator stolen from https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
