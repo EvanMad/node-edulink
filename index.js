@@ -15,12 +15,14 @@ exports.login = function(username, password, school_id) {
         xhr.onreadystatechange = function (e) {
            if (xhr.readyState === 4) {
               var result = JSON.parse(xhr.responseText);
+              //console.log(result)
               auth = result["result"]["authtoken"];
               var id = result["result"]["user"]["id"]
               var loginObj = {auth, id};
               resolve(loginObj);
            }};
         var data = `{"jsonrpc":"2.0","method":"EduLink.Login","params":{"from_app":false,"ui_info":{"format":2,"version":"0.5.181","git_sha":"727e92d872e1b7cb408090427bfab119f384a836"},"username":"${username}","password":"${password}","establishment_id":${school_id}},"uuid":"${uuidv4()}","id":"1"}`;
+        //console.log(data)
         xhr.send(data);
     })
 }
@@ -151,8 +153,8 @@ exports.attendance = function(auth, learner_id) {
 
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
+            var result = JSON.parse(xhr.responseText);
+            resolve(result);
         }};
 
         var data = `{"jsonrpc":"2.0","method":"EduLink.RegisterCodes","params":{"learner_id":"${learner_id}"},"uuid":"${uuidv4()}","id":"1"}`;

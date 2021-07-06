@@ -1,3 +1,7 @@
 node_modules
+node-edulink-1.0.0.tgz
 edulink-1.0.0.tgz
 .env
+example/node-edulink-1.0.0.tgz
+test/node-edulink-1.0.0.tgz
+*.tgz

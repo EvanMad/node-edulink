@@ -1,5 +1,5 @@
 REM // Simple and temporary build sequence
-
+@echo off
 call npm pack
 echo packed
 copy node-edulink-1.0.0.tgz "./test"
