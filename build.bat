@@ -8,9 +8,11 @@ copy node-edulink-1.0.0.tgz "./example"
 del node-edulink-1.0.0.tgz
 
 cd example
-npm install ./node-edulink-1.0.0.tgz
+call npm install ./node-edulink-1.0.0.tgz
+echo installed into example
 cd ..
 
 cd test
-npm install ./node-edulink-1.0.0.tgz
+call npm install ./node-edulink-1.0.0.tgz
+echo installed into test
 cd ..
