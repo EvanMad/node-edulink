@@ -20,14 +20,11 @@ edulink.from_code(process.env.code).then(function (id) {
         console.log(balance);
     }); 
  });
-
 ```
 
 ### Building
 
 build.bat is an automated script for packing the node-edulink node library and moving into example and test for use in there.
-
-
 
 ### Dependencies
 
