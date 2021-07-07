@@ -1,5 +1,29 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
+//Base functions for straight interacting with API
+exports.from_code = function(code) {
+    return new Promise(function(resolve, reject) {
+        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+        var auth;
+        var url = "https://provisioning.edulinkone.com/?method=School.FromCode";
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+
+        //xhr.setRequestHeader("X-API-Method", "School.FromCode");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        
+        xhr.onreadystatechange = function (e) {
+           if (xhr.readyState === 4) {
+              var result = JSON.parse(xhr.responseText);
+              var id = result["result"]["school"]["school_id"];
+              resolve(id);
+           }};
+        var data = `{"jsonrpc":"2.0","method":"School.FromCode","params":{"code":"${code}"},"uuid":"${uuidv4()}","id":"1"}`
+        xhr.send(data);
+    })
+}
+
 exports.login = function(username, password, school_id) {
     return new Promise(function(resolve, reject) {
         var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -66,7 +90,7 @@ exports.get_catering = function(auth, learner_id) {
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var result = JSON.parse(xhr.responseText);
-            resolve(result); //Should probably filter this data
+            resolve(result["result"]["transactions"]); //Should probably filter this data
         }};
         var data = `{"jsonrpc":"2.0","method":"EduLink.Catering","params":{"learner_id":"${learner_id}"},"uuid":"${uuidv4()}","id":"1"}`;
 
@@ -88,7 +112,7 @@ exports.documents = function(auth, learner_id) {
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var result = JSON.parse(xhr.responseText);
-            resolve(result); //TODO: filter
+            resolve(result["result"]["documents"]); //TODO: filter
         }};
         var data = `{"jsonrpc":"2.0","method":"EduLink.Documents","params":{"learner_id":"${learner_id}"},"uuid":"${uuidv4()}","id":"1"}`;
 
@@ -109,6 +133,7 @@ exports.personal_details = function(auth, learner_id) {
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var result = JSON.parse(xhr.responseText);
+            result = result["result"]["personal"];
             resolve(result);
         }};
 
@@ -131,7 +156,7 @@ exports.get_achievementbehaviour = function(auth, learner_id) {
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var result = JSON.parse(xhr.responseText);
-            resolve(result);
+            resolve(result["result"]);
         }};
     
         var data = `{"jsonrpc":"2.0","method":"EduLink.AchievementBehaviourLookups","params":{"learner_id":"${learner_id}"},"uuid":"${uuidv4()}","id":"1"}`;
@@ -154,7 +179,7 @@ exports.attendance = function(auth, learner_id) {
         xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             var result = JSON.parse(xhr.responseText);
-            resolve(result);
+            resolve(result["result"]);
         }};
 
         var data = `{"jsonrpc":"2.0","method":"EduLink.RegisterCodes","params":{"learner_id":"${learner_id}"},"uuid":"${uuidv4()}","id":"1"}`;
