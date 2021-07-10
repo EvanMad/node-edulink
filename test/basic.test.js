@@ -35,10 +35,16 @@ describe("reqs", () => {
 		return edulink.personal_details(authtoken, learner_id);
 	});
 	it("Should get achievement & behaviour data", function () {
-		return edulink
-			.get_achievementbehaviour(authtoken, learner_id)
-			.then(function (result) {
-				//console.log(result);
-			});
+		return edulink.get_achievementbehaviour(authtoken, learner_id);
 	});
+	it("Should get attendance data", function () {
+		return edulink.attendance(authtoken, learner_id);
+	})
+	it("Should ping the server to reset the reset timeout", function() {
+		return edulink
+			.ping(authtoken)
+			.then(function (pongdata) {
+
+			});
+	})
 });
